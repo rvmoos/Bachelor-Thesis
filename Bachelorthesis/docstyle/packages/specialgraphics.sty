@@ -1,0 +1,109 @@
+% specialgraphics.sty Command for convenient inclusion of inkscape graphics
+% Copyright (C) 2016  Andreas Ritter
+
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+% 
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+
+% ==============================================================================
+% Main class definition of specialgraphics.sty
+% ==============================================================================
+\ProvidesPackage{specialgraphics}[2016/23/12 by Andreas Ritter (ETH Zurich)]
+\NeedsTeXFormat{LaTeX2e}
+
+\typeout{-- specialgraphics.sty Command for convenient inclusion of inkscape graphics}
+\typeout{autonomenclature.sty Copyright (C) 2016  Andreas Ritter, ETH Zurich}
+\typeout{This program comes with ABSOLUTELY NO WARRANTY; for details see license.txt.}
+\typeout{This is free software, and you are welcome to redistribute it}
+\typeout{under certain conditions; see license.txt for details. ---}
+
+
+
+
+% ==============================================================================
+% Load packages
+% ==============================================================================
+\RequirePackage{import} % required to include inkskape graphics from subfolders
+\RequirePackage{xstring} % provides macros manipulating strings of tokens
+
+
+
+
+% ==============================================================================
+% Commands \providecounter and \providelength similar to \providecommand
+% ==============================================================================
+\newcommand*\providecounter[1]{%
+\@ifundefined{c@#1}%
+{\@definecounter{#1}}%
+{}%
+}
+
+\newcommand*\providelength[1]{%
+\begingroup
+\escapechar\m@ne
+\xdef\@gtempa{\string#1}%
+\endgroup
+\@ifundefined{\@gtempa}%
+{\newskip#1}%
+{}%
+}
+
+
+
+
+% ==============================================================================
+% Command \includeinkscape
+% ==============================================================================
+\newcommand{\includeinkscape}[2][]{
+% Process the file name (separate the directory from the file name)
+\StrCount{#2}{/}[\@numberOfSlashes]
+\StrCut[\@numberOfSlashes]{#2}{/}{\@thisgraphicspath}{\@thisgraphicsname}
+
+% Process the options
+\ifx#1""\else % if not empty
+\providecommand{\@remainingoptions}{} % save the yet unprocessed options string
+\renewcommand{\@remainingoptions}{#1} % add entire string as unprocessed options string
+\providecommand{\@thiscasenum}{} % save the number of the current case
+\renewcommand{\@thiscasenum}{-1} % invalid case (choses otherwise...)
+
+\loop % for until all options are processed
+\StrCount{\@remainingoptions}{,}[\@numberOfCommas]
+\StrCut[1]{\@remainingoptions}{,}{\@thisoption}{\@remainingoptions}
+\StrCut[1]{\@thisoption}{=}{\@thisargument}{\@thisvalue}
+
+% Identify the case for each option
+\renewcommand{\@thiscasenum}{-1} % reset case number in each iteration
+\IfStrEq{\@thisargument}{width}{\renewcommand{\@thiscasenum}{0}}{}
+%\IfStrEq{\@thisargument}{scale}{\renewcommand{\@thiscasenum}{1}}{}
+
+% switch over cases 0, 1, ...
+\ifcase\@thiscasenum % case \@thiscasenum = 0
+\providelength{\@thiswidth}
+\setlength{\@thiswidth}{\@thisvalue}
+\def\svgwidth{\@thiswidth} % you cannot define \svgwidth directly since in a successive iteration \@thisvalue might become a invalid length and thus \svgwidth gets invalid as well. Using the intermediate step with \@thiswidth circumvents this problem.
+\or % case \@thiscasenum = 1
+\providelength{\@thisscale}
+\setlength{\@thisscale}{\@thisvalue}
+\def\svgscale{\@thisscale}
+\else % otherwise
+\ClassWarning{IDSCreport}{Cannot process option "\@thisargument" with argument "\@thisvalue"}
+\fi % end cases
+\ifnum\@numberOfCommas>0 % end the loop if no options are left
+\repeat % or continue otherwise
+\fi % end of processing options (end of \ifx#1""\else)
+
+% Call the regular routine to include .eps_tex or .pdf_tex graphics
+\import{\@thisgraphicspath/}{\@thisgraphicsname_tex}
+} % end of command \includeinkscape

@@ -1,0 +1,29 @@
+% !TeX document-id = {1b6039a2-262a-4732-908d-46cdd8030bfa}
+% !TeX spellcheck = en_US
+% !TeX encoding = UTF-8
+% !TeX TXS-program:compile = txs:///latexmk/[-pdf -silent  -shell-escape-latexoption="-synctex=1" -output-directory="build"  -r"docstyle/nomenclature_latexmkrc"]
+% !TeX TXS-program:quick = txs:///compile | txs:///view
+
+\documentclass[bt]{docstyle/IDSCreport}
+
+\title{Title}
+\subtitle{Subtitle}
+\author{Hans Muster}
+\ethid{??-???-???}
+\semester{?}
+\email{muster@student.ethz.ch}
+\supervision{First Supervisor\\ Prof. Dr. Second Supervisor}
+\identification{IDSC-XX-YY-ZZ}
+\date{December 2016}
+\keywords{First keyword, Second keyword}
+\bibliography{IEEEabrv,bibliography}
+
+\begin{abstract}
+Abstract goes here
+\end{abstract}
+
+\begin{document}
+\input{chapters/Hardware}
+\input{chapters/Appendix}
+\appendix
+\end{document}

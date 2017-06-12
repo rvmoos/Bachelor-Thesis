@@ -1,0 +1,15 @@
+\contentsline {chapter}{\numberline {1}Hardware}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Components}{1}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Built into Go-Kart}{1}{subsection.1.1.1}
+\contentsline {subsubsection}{ACD 4805 Motor controller}{1}{section*.3}
+\contentsline {subsubsection}{Brake}{1}{section*.4}
+\contentsline {subsubsection}{Steering}{1}{section*.5}
+\contentsline {subsubsection}{Battery}{2}{section*.6}
+\contentsline {subsubsection}{Motor}{2}{section*.7}
+\contentsline {subsection}{\numberline {1.1.2}LinMot}{2}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}Power steering}{2}{subsection.1.1.3}
+\contentsline {subsection}{\numberline {1.1.4}DC-DC converter}{2}{subsection.1.1.4}
+\contentsline {subsection}{\numberline {1.1.5}Microautobox}{2}{subsection.1.1.5}
+\contentsline {subsection}{\numberline {1.1.6}cases/cables/adapters}{2}{subsection.1.1.6}
+\contentsline {chapter}{\numberline {2}Appendix}{3}{chapter.2}
+\contentsline {chapter}{Bibliography}{5}{appendix*.8}

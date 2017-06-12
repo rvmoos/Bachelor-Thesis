@@ -1,0 +1,61 @@
+% !TeX spellcheck = en_US
+% !TeX encoding = UTF-8
+% !TeX root = ../report.tex
+
+\chapter{Hardware}
+\label{chp:Hardware}
+
+\section{Components}
+In the following section, we will shortly describe the relevant parts already built into the kart, as well as all other components we installed. We will also explain their importance and why we decided for these compontents.
+
+\subsection{Built into Go-Kart}
+
+The go-kart used for this project was a SinusiON, an electric kart manufactured by Rimo Germany. An electric kart offers an easier implementation of a throttle-by-wire system over more common petrol-fueled kart, as the basis for such a system is already in place. 
+It's weight prior to modifying it was roughly 170 kg, making it much heavier than a petrol-fueled kart. The dimensions (l/w/h) are 2020mm/1390mm/600mm.
+
+
+\subsubsection{ACD 4805 Motor controller}
+%picture of ACD
+Each of the electric motors is controlled by an ACD 4805 motor controller, mounted on top of the motor. The ACD communicates via CANOpen and allows for easy modification of parameters and performance curves. The motor controller was likely the most important in-built part, as the whole throttle-by-wire system was based on it.
+
+
+\subsubsection{Brake}
+%picture of brake cylinder system
+Rimo offers a dual-circuit hydraulic disc brake system. A simple lever arm connects the brake cylinder to the brake pedal. This configuration requires a precise actuator, as the way difference between a mild and hard brake was minimal. 
+
+\subsubsection{Steering}
+%picture of steering column
+The go-kart's steering mechanism was realized with a bell-crank linkage. This setup resulted in a non-linear steering behaviour, which needed to be accounted for when configuring the power steering. The steering shaft was short and it's surroundings offered limited space, therefore the required steering servo needed to be small as well.
+
+
+\subsubsection{Battery}
+The battery consists of 16 x 3.2 V LiFeMnPO4 cells and offers 40 Ah of battery charge. The nominal on-board voltage is 48 V. Because of the capacity of the battery, it makes a separate power supply for the additional electric actuators redundant.
+
+\subsubsection{Motor}
+%picture of motor torque-speed characteristic
+The kart features two "PMS 100 R" 2.8 kW double-sided synchronous motors, each controlled by one of the two ACD 4805 motor controllers. The motors also offered regenerative braking, offering longer driving time and assisting in braking the car.
+
+\subsection{LinMot}
+In order to actuate the brakes a linear motor i used. The characteristics of being fast and precised make the motor suitable for various brake maneuvers. The motor is an electromagnetic drive in tube-form. The linear motion simulating a mechanical brake can be generated electrical without any form of mechanical interconnection between motor and motion. The linear motor is composed by two parts: the stator and the runner. The runner consists of a series of neodym-magnets, placed in steel tube. In the stator, the winding as well as the bearing for the runner, position detection and supervision of the motor fit in.
+The internal position sensors can dynamically transmit a position signal. Therefore position can be controlled real time. this guarantees a high level of safety and flexibility. 
+In order to communicate with the motor, an linmot motor-driver is employed. Target position, max. speed and acceleration can steadily be adjusted.
+
+
+\subsection{Power steering}
+
+\subsection{DC-DC converter}
+In order to provide 24 VDC for powering the Microautobox and the linear motor drive, an SD-50C-24 DC-DC converter was used.
+
+\subsection{Microautobox (MABX)}
+The power steering manufacturer implemented a blackbox model of their unit in Matlab's Simulink. Their model was programmed to only run on dSpace's Microautobox. The Microautobox is a real-time system, used for performing fast function prototyping.
+
+If needed, the MABX can easily be connected to a more powerful computer via the in-built ethernet connector. The MABX communicates with the go-kart's components via CAN. In it's basic configuration, the system does not support CANOpen, therefore an additional Simulink blockset had to be bought. The scarce time during the project justified the purchase of MABX, otherwise a much cheaper option could have been acquired. A less expensive option obviously calls for more programming and offers less plug-and-play, which surely would have slowed down our progress significantly. 
+
+\subsection{cases/cables/adapters}
+A wide variety of cables, adapters were used in order to ensure seamless integration of the components into our system.
+Most of the cables we soldered ourselves were used for power supply.
+For the CAN communication we used a preexisting solution, where no soldering was needed. 
+Previously, a RJ-45 cable connected the linear motor drive to the can network. A break out adapter was bought, in order to gain easy access to the CAN high and CAN low connectors.
+
+
+A metal sheet case was bought and mounted in the back of the kart, where the DC-DC converter, the MABX and the Linmot motor drive were safely stored.
