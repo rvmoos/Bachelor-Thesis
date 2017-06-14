@@ -1,4 +1,4 @@
-% !TeX spellcheck = en_US
+% !TeX spellcheck = en_GB
 % !TeX encoding = UTF-8
 % !TeX root = ../report.tex
 
@@ -29,19 +29,20 @@ The go-kart's steering mechanism was realized with a bell-crank linkage. This se
 
 
 \subsubsection{Battery}
-The battery consists of 16 x 3.2 V LiFeMnPO4 cells and offers 40 Ah of battery charge. The nominal on-board voltage is 48 V. Because of the capacity of the battery, it makes a separate power supply for the additional electric actuators redundant.
+The main battery consists of 16 x 3.2 V LiFeMnPO4 cells and offers 40 Ah of battery charge. The nominal on-board voltage is 48 V. Because of the capacity of the battery, it makes a separate power supply for most of the additional electric actuators redundant. Only the power steering required 12 V and 90 A peak current. Because most converters do not support such a high peak current and the idea of capacitor seemed impractical, a small 12 V battery with a capacity of 3 Ah had to be installed in the front of the car.
 
 \subsubsection{Motor}
 %picture of motor torque-speed characteristic
 The kart features two "PMS 100 R" 2.8 kW double-sided synchronous motors, each controlled by one of the two ACD 4805 motor controllers. The motors also offered regenerative braking, offering longer driving time and assisting in braking the car.
 
 \subsection{LinMot}
-In order to actuate the brakes a linear motor i used. The characteristics of being fast and precised make the motor suitable for various brake maneuvers. The motor is an electromagnetic drive in tube-form. The linear motion simulating a mechanical brake can be generated electrical without any form of mechanical interconnection between motor and motion. The linear motor is composed by two parts: the stator and the runner. The runner consists of a series of neodym-magnets, placed in steel tube. In the stator, the winding as well as the bearing for the runner, position detection and supervision of the motor fit in.
-The internal position sensors can dynamically transmit a position signal. Therefore position can be controlled real time. this guarantees a high level of safety and flexibility. 
-In order to communicate with the motor, an linmot motor-driver is employed. Target position, max. speed and acceleration can steadily be adjusted.
+In order to actuate the brakes a linear motor was used. The characteristics of being fast and precised make the motor suitable for various brake maneuvers. The motor is an electromagnetic drive in tube-form. The linear motion simulating a mechanical brake can be generated electrical without any form of mechanical interconnection between motor and motion. The linear motor is composed by two parts: the stator and the runner. The runner consists of a series of neodym-magnets, placed in steel tube. In the stator, the winding as well as the bearing for the runner, position detection and supervision of the motor fit in.
+The internal position sensors can dynamically transmit a position signal. Therefore position can be controlled real time. This guarantees a high level of safety and flexibility. 
+In order to communicate with the motor, an LinMot motor-drive is employed. Target position, maximum velocity and acceleration can steadily be adjusted.
 
 
 \subsection{Power steering}
+Thyssenkrupp Presta offered a compact and powerful solution. The 3 Nm of rated torque was more than sufficient for steering the kart. The unit communicates via CANOpen, with TKP offering a Simulink Blockset for easy implementation. 
 
 \subsection{DC-DC converter}
 In order to provide 24 VDC for powering the Microautobox and the linear motor drive, an SD-50C-24 DC-DC converter was used.

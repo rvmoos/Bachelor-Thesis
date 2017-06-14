@@ -1,0 +1,28 @@
+% !TeX spellcheck = en_GB
+% !TeX encoding = UTF-8
+% !TeX root = ../report.tex
+
+\chapter{Software}
+\label{chp:Software}
+
+For this project, a variety of software was being used, namely dSpace Control Desk, LinMot Talk and Matlab Simulink. Without going into too much detail, we will elaborate on their use in this project and how they worked together.
+
+%Insert graphic of hierarchy
+
+Matlab is a numerical computing environment, with Simulink being a block diagram environment for multi domain simulation and model-based design.
+
+dSpace Controldesk is a experiment software, used to develop and test operating ECUs. If offers data capture across different platforms and access to common Bussystems, including CAN and CANOpen.
+
+LinMot Talk is LinMot's own drive-configuration software, allowing for easy access to the drive and controlling of the linear motor.
+
+When the system is online, the Microautobox will receive commands from a higher layer, such as a simple rc controller or an A.I. autonomously controlling the vehicle. For this, a model of the communication interface needed to be set up in Simulink.
+
+dSpace provided us with numerous Simulink blocksets, containing blocks of all necessary components, such as ADC, DAC and CAN. With these, a model can easily be formed and compiled. The compiler creates a C/C++ code, which then will be flashed onto the Microautobox. Controldesk can then be used to gain information about the state of the system's components and change values in real-time.
+
+LinMot Talk was mainly used to find out the most efficient way to communicate with the linear motor and become familiar with it's characteristic. The software includes a configurable oscilloscope, where the variables and parameters of interest can be plotted. This allowed us to determine the optimal performance of the motor in the given circumstances.
+The software is also needed, to flash the configurable firmware onto the linear motor's drive. This needed to be done once, as all of the parameters and commands can be changed afterwards via CANOpen.
+
+%Screenshot of Simulink Model
+%Explain functionality of important blocks
+
+Considering Matlab Simulink required the most work, we will now elaborate on our process of creating our Simulink model.
