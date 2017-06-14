@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.5.31)  13 JUN 2017 12:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.5.31)  14 JUN 2017 16:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2561,14 +2561,14 @@ Package hyperref Info: Option `pageanchor' set `false' on input line 24.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-<docstyle/logos/eth.pdf, id=55, 854.19125pt x 229.85875pt>
+<docstyle/logos/eth.pdf, id=79, 854.19125pt x 229.85875pt>
 File: docstyle/logos/eth.pdf Graphic file (type pdf)
 
 <use docstyle/logos/eth.pdf>
 Package pdftex.def Info: docstyle/logos/eth.pdf used on input line 24.
 (pdftex.def)             Requested size: 169.16689pt x 45.52458pt.
 
-<docstyle/logos/idsc.pdf, id=56, 745.78625pt x 171.64125pt>
+<docstyle/logos/idsc.pdf, id=80, 745.78625pt x 171.64125pt>
 File: docstyle/logos/idsc.pdf Graphic file (type pdf)
 
 <use docstyle/logos/idsc.pdf>
@@ -2677,24 +2677,30 @@ Chapter 2.
 
 ]
 Chapter 3.
-) (./chapters/Appendix.tex [7
+) (./chapters/Communication.tex [7
 
 ] [8
 
 ]
 Chapter 4.
+) (./chapters/Appendix.tex [9
+
+] [10
+
+]
+Chapter 5.
 (./bibliography.bib
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <9> on input line 1.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 1.
-)) (./report.bbl [9
-
-] [10
-
-]) [11
+)) (./report.bbl [11
 
 ] [12
+
+]) [13
+
+] [14
 
 ]
 *geometry* verbose mode - [ newgeometry ] result:
@@ -2733,42 +2739,52 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 File: docstyle/logos/eth.pdf Graphic file (type pdf)
 
 <use docstyle/logos/eth.pdf>
-Package pdftex.def Info: docstyle/logos/eth.pdf used on input line 30.
+Package pdftex.def Info: docstyle/logos/eth.pdf used on input line 31.
 (pdftex.def)             Requested size: 158.59639pt x 42.67912pt.
-LaTeX Font Info:    Try loading font information for T1+lmss on input line 30.
+LaTeX Font Info:    Try loading font information for T1+lmss on input line 31.
  (c:/texlive/2016/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [13
+) [15
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 30.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 30.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 31.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 31.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 30.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 30.
-Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 890904CBBFEA1B0E9D4FB081AB413A01;795.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 31.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 31.
+
+
+Package rerunfilecheck Warning: File `report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `report.out':
+(rerunfilecheck)             Before: AA024DC5D7DE102C34521E382D9BE06A;1162
+(rerunfilecheck)             After:  CDE8F04B1C6220542AB4792A4919BCAF;1239.
  ) 
 Here is how much of TeX's memory you used:
- 51950 strings out of 493013
- 1107973 string characters out of 6136993
+ 51972 strings out of 493013
+ 1108292 string characters out of 6136993
  1298224 words of memory out of 5000000
- 54599 multiletter control sequences out of 15000+600000
+ 54608 multiletter control sequences out of 15000+600000
  93039 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,11n,98p,10353b,2625s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}<c:/texlive/2016/tex
-mf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2016/texmf-dist/fonts/type
-1/public/lm/lmbx12.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr10.
-pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/texlive/201
-6/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/texlive/2016/texmf-dist/fonts/
-type1/public/lm/lmri10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/lm/lm
-ri7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/lm/lmss10.pfb><c:/texliv
-e/2016/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on report.pdf (19 pages, 290302 bytes).
+pdfTeX warning (dest): name{appendix*.9} has been referenced but does not exi
+st, replaced by a fixed one
+
+{c:/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}<c:/texlive/2016/texmf
+-dist/fonts/type1/public/lm/lmbx10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/
+public/lm/lmbx12.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr10.pf
+b><c:/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/texlive/2016/
+texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/texlive/2016/texmf-dist/fonts/ty
+pe1/public/lm/lmri10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/lm/lmri
+7.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/lm/lmss10.pfb><c:/texlive/
+2016/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on report.pdf (21 pages, 294062 bytes).
 PDF statistics:
- 244 PDF objects out of 1000 (max. 8388607)
- 206 compressed objects within 3 object streams
- 49 named destinations out of 1000 (max. 500000)
- 119 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 285 PDF objects out of 1000 (max. 8388607)
+ 245 compressed objects within 3 object streams
+ 59 named destinations out of 1000 (max. 500000)
+ 167 words of extra memory for PDF output out of 10000 (max. 10000000)
 
