@@ -27,9 +27,61 @@ Each CAN message contains the following structure.
 
 Especially the role of the identifier bit is important, as it handles and represents the message priority.
 
+\pagebreak
+
 \section{CANOpen}
 
 CANOpen is a higher-layer protocol based on the aforementioned CAN. In the following, we will provide information on the project-relevant aspects of CANOpen.
+All real-time data is exchanged via process data objects (PDO). The adress of each individual PDO can be found in a standardized table by CAN in Automation (CiA). PDO's contain data from a single or different objects from the object dictionary. This maps each bit of the data section of a PDO to a certain object. The standard table of CAN-Id's can be found below.
+\\
+
+% Add table of CAN ID
+\begin{tabular}{|c|c|c|}
+	\hline 
+	\textbf{COB} & \textbf{Function Code} & \textbf{Resulting CAN-ID} \\ 
+	\hline 
+	NMT &  0000$_{b}$  & $0 (000_{h})$  \\ 
+	\hline 
+	CODE & $0001_{b}$ &  $128 (080_{h})$\\ 
+	\hline 
+	TIME & $0010_{b}$ &  $256 (100_{h})$\\ 
+	\hline 
+	EMCY & $0001_{b}$ &   $129 (081_{h}) $–  255 (0FF$_{h})$ \\ 
+	\hline 
+	PDO1(tx) & $0011_{b}$ &  $385 (181_{h}) $ – 511 (1FF$_{h})$\\ 
+	\hline 
+	PDO1(rx) & $0100_{b}$ &  $513 (201_{h}) $ –  639 (27F$_{h})$\\ 
+	\hline 
+	PDO2(tx) & $0101_{b}$ &  $641 (281_{h}) $ –  767 (2FF$_{h})$\\ 
+	\hline 
+	PDO2(rx) & $0110_{b}$ &  $769 (301_{h})$  –  895 (37F$_{h})$\\ 
+	\hline 
+	PDO3(tx) & $0111_{b}$ &  $897 (381_{h}) $ – 1023 (3FF$_{h})$\\ 
+	\hline 
+	PDO3(rx) & $1000_{b}$ &  $1025 (401_{h}) $ –  1151 (47F$_{h})$\\ 
+	\hline 
+	PDO4(tx) & $1001_{b}$ &  $1153 (481_{h}) $ –  1279 (4FF$_{h})$\\ 
+	\hline 
+	PDO4(rx) & $1010_{b}$ & $1281 (501_{h}) $ –  1407 (57F$_{h})$\\ 
+	\hline 
+	SDO(tx) & $1011_{b}$ & $ 1409 (581_{h}) $ –  1535 (5FF$_{h})$\\ 
+	\hline 
+	SDO(rx) & $1100_{b}$ & $1537 (601_{h}) $ –  1663 (67F$_{h})$\\ 
+	\hline 
+	NMT error control &$ 1110_{b} $& $ 1793 (701_{h}) $ –  1919 (77F$_{h})$\\ 
+	\hline 
+\end{tabular} 
+\\
+\\
+\textit{Table 1, COBs and there corresponding CAN-IDs}
+%adjust table number
+
+Each CAN device has a personal node, ranging from 1 to 127. This ensures that every message reaches it's corresponding device.
+% example of pdo can message
+
+To change PDO mapping or customise parameters in the object dictionary, service data objects (SDO) are used. These however do not transmit and receive real-time data, but are only used for service purposes. They usually contain the index, subindex and the new value of the respective object.
+
+% example of sdo can message
 
 
 
@@ -37,4 +89,66 @@ CANOpen is a higher-layer protocol based on the aforementioned CAN. In the follo
 %brief explaination on additional features, their advantages and how they benefited us.
 \subsection{Implementation}
 %explain what commands we used, object dictionary and relevant commands/messages.
+
+
+\subsubsection{ACD}
+
+In order to communicate with the ACD, the CAN Node-Id of each ACD had to be determined. One of Rimo's pdf files, namely "Setting up ACD Controller \& Connection Diagram", serves exactly this purpose. 
+%refer to appendix witht file.
+To find the respective node-id's, we had to check if either pin 12 (DI5) or pin 20 (DI6) was connected to any other pins on the ACD 4805 K1 connector. In our case, pin 12 of the right ACD was connected to pin 1, making it node 6. Pin 12 of the left ACD was not connected and therefore making it node 5. Afterwards our findings were confirmed when we connected the go-kart to our CAN bus. With the help of a CAN-USB adapter, we were able to receive and send messages, and after a while controlling the kart.
+Because the go-kart does not communicate via CAN by default but only for service and remote control purposes, we had to put all nodes into operational mode by sending a NMT start messages to all nodes, namely node 5 and 6.
+The ID of a NMT message is 0x000, to start the nodes the instruction code 0x01 had to be used. To reach all nodes simultaneously, the node adress needed to be 0x0. 
+
+
+
+We established connection between MABX and a receiver, in our case a laptop connected to the MABX CAN via CAN USB.
+
+
+Two's complement is convenient way to store integers, such that adding and subtracting with negative numbers becomes very easy. This was used on the ACD 4805, where certain values, such as the rotational speed of the wheels, can be negative. 
+The basic principles of two's complement are the following.
+
+- Zero is represented by all 0's. 
+e.g. 0 0 0 0 = 0
+
+- The maximum positive integer is $ 2^{number of bits-1}-1 $.
+So for 4 bits, the biggest integer is therefore 0 1 1 1 = 7, and not 1 1 1 1 = 15 as in the standard notation.
+
+- if the integer is negative, 1's and 0's switch roles, starting from all one's, e.g. 1 1 1 1 = -1. This increases the range for negative numbers by one.
+
+So for 4 bits it looks as follows.
+
+\begin{tabular}{llll}
+0 0 0 0 = 0 & 0 1 0 0 = 4 & 1 1 1 1 = -1 & 1 0 1 1 = -5\\
+0 0 0 1 = 1 & 0 1 0 1 = 5 & 1 1 1 0 = -2 & 1 0 1 0 = -6\\
+0 0 1 0 = 2 & 0 1 1 0 = 6 & 1 1 0 1 = -3 & 1 0 0 1 = -7\\
+0 0 1 1 = 3 & 0 1 1 1 = 7 & 1 1 0 0 = -4 & 1 0 0 0 = -8
+\end{tabular}
+
+So an easy way to find the negative integer of a positive integer is to convert the desired decimal number to binary, inverting all 0's and 1's and then adding 1. A more hands on approach is to again convert to binary, starting from the right to find the first 1 and inverting all bits to the left of it.
+
+So in order to have a rotational speed of -500 revolutions per minute, the following steps have to be taken for a signed 16 bit integer.
+
+500 = 0 0 0 0 \: 0 0 0 1 \: 1 1 1 1 \: 0 1 0 0
+
+Now invert all bits.
+
+1 1 1 1 \: 1 1 1 0 \: 0 0 0 0 \: 1 0 1 1
+
+And add 1
+
+1 1 1 1 \: 1 1 1 0 \: 0 0 0 0 \: 1 1 0 0 = -500
+
+The second method would result in the following steps.
+
+Starting from the right, find first 1.
+
+500 = 0 0 0 0 \: 0 0 0 1 \: 1 1 1 1 \: 0 \textbf{1} 0 0
+
+Invert all consecutive bits to the left of it.
+
+1 1 1 1 \: 1 1 1 0 \: 0 0 0 0 \: 1 \textbf{1} 0 0 = -500
+
+If a signed integer is postive or negative is easy to spot, as it's most significant bit determines if the number is negative or positive. 1 = negative, 0 = positive.
+
+\subsubsection{LinMot}
 
