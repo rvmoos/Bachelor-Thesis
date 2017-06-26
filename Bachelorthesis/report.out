@@ -1,5 +1,5 @@
 \BOOKMARK [0][-]{chapter.1}{1\040Introduction}{}% 1
-\BOOKMARK [0][-]{chapter.2}{2\040Hardware}{}% 2
+\BOOKMARK [0][-]{chapter.2}{2\040Overview\040Hardware}{}% 2
 \BOOKMARK [1][-]{section.2.1}{2.1\040Components}{chapter.2}% 3
 \BOOKMARK [2][-]{subsection.2.1.1}{2.1.1\040Built\040into\040Go-Kart}{section.2.1}% 4
 \BOOKMARK [2][-]{subsection.2.1.2}{2.1.2\040LinMot}{section.2.1}% 5
@@ -7,7 +7,7 @@
 \BOOKMARK [2][-]{subsection.2.1.4}{2.1.4\040DC-DC\040converter}{section.2.1}% 7
 \BOOKMARK [2][-]{subsection.2.1.5}{2.1.5\040Microautobox\040\(MABX\)}{section.2.1}% 8
 \BOOKMARK [2][-]{subsection.2.1.6}{2.1.6\040cases/cables/adapters}{section.2.1}% 9
-\BOOKMARK [0][-]{chapter.3}{3\040Software}{}% 10
+\BOOKMARK [0][-]{chapter.3}{3\040Overview\040Software}{}% 10
 \BOOKMARK [0][-]{chapter.4}{4\040Implementation}{}% 11
 \BOOKMARK [1][-]{section.4.1}{4.1\040Steering}{chapter.4}% 12
 \BOOKMARK [1][-]{section.4.2}{4.2\040Braking}{chapter.4}% 13
