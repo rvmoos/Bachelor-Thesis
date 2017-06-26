@@ -36,33 +36,74 @@ CANOpen is a higher-layer protocol based on the aforementioned CAN. In the follo
 All real-time data is exchanged via process data objects (PDO). The adress of each individual PDO can be found in a standardized table by CAN in Automation (CiA). PDO's contain data from a single or different objects from the object dictionary. This maps each bit of the data section of a PDO to a certain object. 
 To change PDO mapping or customise parameters in the object dictionary, service data objects (SDO) are used. These however do not transmit and receive real-time data, but are only used for service purposes. They usually contain the index, subindex and the new value of the respective object.
 
+So for example, the mapping of the ACD's RPDO1 looks like the following.
+
+\begin{tabular}{|c|c|c|c|}
+	\hline 
+	Name & Index & Subindex & Bit \\ 
+	\hline 
+	&  &  &  \\ 
+	\hline 
+	Command Word & 0x2000 & 1 & 16 \\ 
+	\hline 
+	Command Speed & 0x2000 & 2 & 16 \\ 
+	\hline 
+	Command Acceleration & 0x2000 & 5 & 8 \\ 
+	\hline 
+	Command Deceleration & 0x2000 & 6 & 8 \\ 
+	\hline 
+\end{tabular} 
+\\
+\\
+\textit{Table 1, RPDO1 of the ACD 4805}
+
+So in order to set a desired speed on the right (Node 6) motor controller of around 900 rpm, the following message had to be sent.
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline 
+	CAN-ID & \multicolumn{6}{c|}{DATA} \\ 
+	\hline 
+	0x206 & 09 & 00 & 48 & 03 & 00 & 00 \\ 
+	\hline 
+\end{tabular} 
+
 Each CAN device has a personal node, ranging from 1 to 127. This ensures that every message reaches it's corresponding device.
 % example of pdo can message
 
-% example of sdo can message
-The standard table of CAN-Id's can be found below.
-\\
 
+% example of sdo can message
 %keywords
-%transmission type, can id, sdo, pdo
+%transmission type, can id, sdo, pdo, NMT
 There are various transmission types avaible in CANOpen for PDOs. Some are manufacturer specific, therefore only the types relevant for our project will shortly be described.
 
-Transmission type 0 (acyclic synchronous)
+\begin{itemize}
 
-%write more about this 
+\item Transmission type 1-240 (cyclic synchronous)
+\begin{itemize}
+	\item This transmission type relies on sync messages. After every nth sync messages, the PDO transmits it's data. So for example, if the transmission type is 6, the PDO will send after every 6th sync message.
+	
+	For the Linmot, we used the transmission type one. So in order to gain information about the motor, we had to send sync messages.
+	
+\end{itemize}
 
-Transmission type 1-240 (cyclic synchronous)
+\item {Transmission type 254/255 (asynchronous)}
+\begin{itemize}
+	\item These transmission types are event-triggered, where the event is manufacturer specific for 254 and for 255 defined in the CANOpen device profile.
+	
+	For the ACD 4805, tranmission type 254 was listed as unpack the data immediately. This was the setting used in the ACD and in the Mircoautobox.
+	
+	For the LinMot, transmission type 254 was event triggered, with an adjustable internal timer which triggers the event.
+\end{itemize}
 
-This transmission type relies on sync messages. After every n sync messages, the PDO transmits it's data. So for example, if the transmission type is 6, the PDO will send after every 6th sync message.
-
-Transmission type 254/255 (asynchronous)
-
-These transmission types are event-triggered, where the event is manufacturer specific for 254 and for 255 defined in the CANOpen device profile.
+\end{itemize}
 
 
 %busheavy, buslight, busoff, correct baudrate etc.
 
-% Add table of CAN ID
+
+
+The standard table of CAN-Id's can be found below.
+
 \begin{tabular}{|c|c|c|}
 	\hline 
 	\textbf{COB} & \textbf{Function Code} & \textbf{Resulting CAN-ID} \\ 
@@ -100,7 +141,7 @@ These transmission types are event-triggered, where the event is manufacturer sp
 \end{tabular} 
 \\
 \\
-\textit{Table 1, COBs and there corresponding CAN-IDs}
+\textit{Table 2, COBs and there corresponding CAN-IDs}
 %adjust table number
 
 
@@ -183,7 +224,7 @@ If a signed integer is postive or negative is easy to spot, as it's most signifi
 \subsubsection{LinMot}
 important settings
 
-For some reason, TPDO3 and TPDO4 would not transmit their data when a sync message was sent. This was tried to solve by setting the intern event timer to around 10 ms and changing the transmission type to 254. However, after a while it would stop transmitting out of a unknown reason. As time was scarce, we simply remapped the pdos, such that the needed data would be transmitted via TPDO2. 
+For some reason, TPDO3 and TPDO4 would not transmit their data when a sync message was sent. This was tried to solve by setting the intern event timer to around 10 ms and changing the transmission type to 254. However, after a while it would stop transmitting out of a unknown reason. As time was scarce, we simply remapped the PDOs, such that the needed data would be transmitted via TPDO2. 
 
 %talk about failsafe for brake
 

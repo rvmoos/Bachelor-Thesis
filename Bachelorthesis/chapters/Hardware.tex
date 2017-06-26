@@ -12,6 +12,8 @@ In the following section, we will shortly describe the relevant parts already bu
 
 The go-kart used for this project was a SinusiON, an electric kart manufactured by Rimo Germany. An electric kart offers an easier implementation of a throttle-by-wire system over more common petrol-fueled kart, as the basis for such a system is already in place. 
 It's weight prior to modifying it was roughly 170 kg, making it much heavier than a petrol-fueled kart. The dimensions (l/w/h) are 2020mm/1390mm/600mm.
+For any specifications or parts not listed in this chapter, we refer to the RIMO manuals.
+%proper appenix
 
 
 \subsubsection{ACD 4805 Motor controller}
@@ -29,7 +31,7 @@ The go-kart's steering mechanism was realized with a bell-crank linkage. This se
 
 
 \subsubsection{Battery}
-The main battery consists of 16 x 3.2 V LiFeMnPO4 cells and offers 40 Ah of battery charge. The nominal on-board voltage is 48 V. Because of the capacity of the battery, it makes a separate power supply for most of the additional electric actuators redundant. Only the power steering required 12 V and 90 A peak current. Because most converters do not support such a high peak current and the idea of capacitor seemed impractical, a small 12 V battery with a capacity of 3 Ah had to be installed in the front of the car.
+The main battery consists of 16 x 3.2 V LiFeMnPO4 cells and offers 100 Ah of battery charge. The nominal on-board voltage is 48 V. Because of the battery's high capacity, it makes a separate power supply for most of the additional electric actuators redundant. Only the power steering required 12 V and 90 A peak current. Because most converters do not support such a high peak current and the idea of capacitor seemed impractical, a small 12 V battery with a capacity of 3 Ah had to be installed in the front of the car.
 
 \subsubsection{Motor}
 %picture of motor torque-speed characteristic
@@ -42,7 +44,7 @@ In order to communicate with the motor, an LinMot motor-drive is employed. Targe
 
 
 \subsection{Power steering}
-Thyssenkrupp Presta offered a compact and powerful solution. The 3 Nm of rated torque was more than sufficient for steering the kart. The unit communicates via CANOpen, with TKP offering a Simulink Blockset for easy implementation. 
+Thyssenkrupp Presta offered a compact and powerful solution for a power steering unit. The 3 Nm of rated torque was more than sufficient for steering the kart. The unit communicates via CANOpen, with TKP offering a Simulink blockset for easy implementation. 
 
 \subsection{DC-DC converter}
 In order to provide 24 VDC for powering the Microautobox and the linear motor drive, an SD-50C-24 DC-DC converter was used.
@@ -54,9 +56,6 @@ If needed, the MABX can easily be connected to a more powerful computer via the 
 
 \subsection{cases/cables/adapters}
 A wide variety of cables, adapters were used in order to ensure seamless integration of the components into our system.
-Most of the cables we soldered ourselves were used for power supply.
-For the CAN communication we used a preexisting solution, where no soldering was needed. 
-Previously, a RJ-45 cable connected the linear motor drive to the can network. A break out adapter was bought, in order to gain easy access to the CAN high and CAN low connectors.
-
-
+Most of the cables we prepared ourselves were used for power supply.
+For the CAN communication we used a preexisting solution, where no soldering was needed.
 A metal sheet case was bought and mounted in the back of the kart, where the DC-DC converter, the MABX and the Linmot motor drive were safely stored.

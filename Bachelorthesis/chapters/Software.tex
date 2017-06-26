@@ -11,11 +11,12 @@ For this project, a variety of software was being used, namely dSpace Control De
 
 Matlab is a numerical computing environment, with Simulink being a block diagram environment for multi domain simulation and model-based design.
 
-dSpace Controldesk is a experiment software, used to develop and test operating ECUs. If offers data capture across different platforms and access to common Bussystems, including CAN and CANOpen.
+dSpace Controldesk is a experiment software, used to develop and test operating ECUs. If offers data capture across different platforms and access to common bussystems, including CAN and CANOpen.
 
 LinMot Talk is LinMot's own drive-configuration software, allowing for easy access to the drive and controlling of the linear motor.
 
-When the system is online, the Microautobox will receive commands from a higher layer, such as a simple rc controller or an A.I. autonomously controlling the vehicle. For this, a model of the communication interface needed to be set up in Simulink.
+When the system is online, the Microautobox will receive commands from a higher layer, such as a simple rc controller or an A.I. autonomously controlling the vehicle. 
+%For this, a model of the communication interface needed to be set up in Simulink.
 
 dSpace provided us with numerous Simulink blocksets, containing blocks of all necessary components, such as ADC, DAC and CAN. With these, a model can easily be formed and compiled. The compiler creates a C/C++ code, which then will be flashed onto the Microautobox. Controldesk can then be used to gain information about the state of the system's components and change values in real-time.
 
@@ -24,9 +25,3 @@ The software is also needed to flash the configurable firmware onto the linear m
 
 To debug our programmed software and monitor the can bus, we used a PCAN USB adpater, together with the PCAN View software to send and receive messages and PCAN Stats to manage the CAN network and adjust the baud rate.
 
-%power steering only torque, therefore simple controller
-
-%Screenshot of Simulink Model
-%Explain functionality of important blocks
-
-Considering Matlab Simulink required the most work, we will now elaborate on our process of creating our Simulink model.

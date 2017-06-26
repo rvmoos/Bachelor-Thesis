@@ -4,3 +4,17 @@
 
 \chapter{Results and Discussion}
 \label{chp:Results}
+
+\section{Testing}
+
+\subsection{Linear motor}
+
+To find the optimal parameters of the linear motor, we used a simple spring setup and the LinMot Talk software. With the software, we were able to adjust any motor parameters in real-time, have it perform different moves at various speeds and accelerations. On the spring gauge, which was clamped in between the linear motor and the beam, we could read off the force and compare it to the calculated force in LinMot Talk. We found out that the maximum stroke was mostly limited by the maximum velocity. The maximum required stroke of around 55 mm can be reached with a maximum velocity of around 1.5 m/s and maximum acceleration. A maximum velocity higher than that, leads to the motor shutting down, which is something we certainly wanted to avoid.
+%include picture of setup
+
+\subsection{Brake}
+Another test was performed to check the brake's force and speed. Using simple buttons to trigger a move by the linear motor on the LinMot drive, the driver was able to brake the kart at his command. Starting of with a rather short stroke, resulted in a minimal braking force. It however proofed our concept, and showed that the linear motor can be used while on the kart. We were there independent of external power supplies as well as our laptops. As soon as we increased the stroke and therefore the brake force, one of our fuses blew. We hadn't realized, that the fuse was rated for up to 10 A. The linear motor's peak current however was around 25 A. This is why the fuse blew, and we replaced it with a appropriate fuse. Now that we were able to increase the stroke to maximum length without risking short circuit, the brake force was enough to stop the wheels at almost full speed. This showed, that our brake design fulfilled our requirements of force and speed. 
+%The precision of the linear motor was not yet determined fully, which would follow in subsequent tests.
+
+\subsection{Throttle}
+

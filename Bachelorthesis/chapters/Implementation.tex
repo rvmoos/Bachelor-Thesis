@@ -7,29 +7,26 @@
 
 \section{Steering}
 
-As already mentioned in chapter one, we used a compact power steering unit, with a rated torque of around 3 Nm. In order to install the unit, the kart's steering column was cut up, as was the power steering's drive shaft. The column and to the drive shaft were then joined together, by using press-fit joints.
+As already mentioned in chapter one, we used a compact power steering unit, with a rated torque of around 3 Nm. In order to install the unit, the kart's steering column was cut up, as was the power steering's drive shaft. The column and to the drive shaft were then joined together, by using press-fit joints. To counter the motor's torque, we fixed it to the steering wheel's metal holder. 
 
 \section{Braking}
 
-Braking presented itself to be the most difficult aspect in the drive-by-wire system. The kart offered limited space, therefore powerful actuator was needed. Early testing showed that for a full brake roughly 250-350 N of force was required. However, this testing was done with the kart moving, therefore we could not fully rely on these results.
+Braking presented itself to be the technically most difficult aspect in the drive-by-wire system. The kart offered limited space, therefore powerful actuator was needed. Early testing showed that for a full brake roughly 250-350 N of force was required. However, this testing was done with the kart jacked up, therefore we could not fully rely on these results.
 %brake hydraulic complicated not interfering 
 
 Early on we set a few requirements for our brake actuator, namely speed, force and precision. After some research we decided to look further into a high end linear motor by LinMot and neglect the idea of a rotary motor. Our main reasons being that a rotary motor generally was significantly slower and usually required external sensors to be precise enough. 
+We also dismissed the intriguing concept of directly interfering with the hydraulic system, for example inserting an electro hydraulic pump into the system. Our main reasoning against this was that it would require a lot of time, effort and would most likely not outperfom a simpler mechanical brake actuator.
+
+A very easy to implement and cost efficient method of braking that we proposed was plugging braking. The idea was to use the kart's electro motors to brake, by reversing the current. While it would not need any additional parts and would only require some programming, we soon realised the braking power probably be sufficient and power consumption would rise significantly. Because time was running low and we had to decide for a reliable solution, we chose a linear motor over the plugging braking option. If we had more time on our hands and could have done some testing of the required braking power, we might have decided otherwise.
+
+With all other options out of our way, we were now able to focus on the linear motor.
 With our battery providing 48 VDC, LinMot's range of motor narrowed down quite a bit. The PS01-48x240F-C was our first idea, as it provided up to 572 N of maximum force. We quickly realized that our limited space would not allow for such a big motor. After a personal consultation with one of LinMot's employees, we decided for a PS01-37x120F-HP-C with a 300 mm runner. Because of the smaller size, we now had various options of where to put the linear motor. Again, we strived for an easy installation. Therefore we determined the best location to be on top of the brake cylinder, just in between the two pedals. Pushing the pedal, resulted in a small vertical downward motion of the point where the motor's runner was attached to the lever. As the linear motor should not be under radial load, a design was realized with bearing on the front end, which allowed the motor to tilt slightly. This helped reduce the radial load, as the downward motion could be compensated with tilting the motor at an angle.
+
+
 
 
 
 \section{Throttle}
 
-To control the throttle, we had to access the ACD 4805 motor controller of each electric drive. After a simple start up sequence, we were able to control the velocity of each wheel via CANOpen.
+To control the throttle, we had to access the ACD 4805 motor controller of each electric drive. After a simple start up sequence, we were able to control the velocity of each wheel via CANOpen. For throttling, no actuators had to implemented. The crucial work that went into throttle-by-wire part was mainly communication and will therefore be discussed in the following chapter.
 
-%further elaborate on in section communication? 
-
-\section{Testing}
-
-%testing of linear motor, specifications and optimal parameters
-
-To find the optimal parameters of the linear motor, we used a simple spring setup and the LinMot Talk software. With the software, we were able to adjust any motor parameters in real-time, have it perform different moves at various speeds and accelerations. On the spring gauge, which was clamped in between the linear motor and the beam, we could read off the force and compare it to the calculated force in LinMot Talk. We found out that the maximum stroke was mostly limited by the maximum velocity. The maximum required stroke of around 55 mm can be reached with a maximum velocity of around 1.5 m/s and maximum acceleration. A maximum velocity higher than that, leads to the motor shutting down, which is something we certainly wanted to avoid.
-%include picture of setup
-
-Another test was performed to check the brake's force and speed. Using simple buttons to trigger a move by the linear motor on the LinMot drive, the driver was able to brake the kart at his command. Starting of with a rather short stroke, resulted in a minimal braking force. It however proofed our concept, and showed that the linear motor can be used while on the kart. We were there independent of external power supplies as well as our laptops. As soon as we increased the stroke and therefore the brake force, one of our fuses blew. We hadn't realized, that the fuse was rated for up to 10 A. The linear motor's peak current however was around 25 A. This is why the fuse blew, and we replaced it with a appropriate fuse. Now that we were able to increase the stroke to maximum length without risking short circuit, the brake force was enough to stop the wheels at almost full speed. This showed, that our brake design fulfilled our requirements of force and speed. The precision of the linear motor was not yet determined fully, which would follow in subsequent tests.
