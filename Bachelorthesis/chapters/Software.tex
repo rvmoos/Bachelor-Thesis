@@ -13,7 +13,7 @@ Matlab is a numerical computing environment, with Simulink being a block diagram
 
 dSpace Controldesk is a experiment software, used to develop and test operating ECUs. If offers data capture across different platforms and access to common bussystems, including CAN and CANOpen.
 
-LinMot Talk is LinMot's own drive-configuration software, allowing for easy access to the drive and controlling of the linear motor.
+LinMot Talk is LinMot's own drive-configuration software, allowing for easy access to the drive and controlling of the linear motor. Changes to the parameters of the drive are recommended to be made with this software since it provides an intuitive user interface compared to the communication with SDO-Data via CAN.
 
 When the system is online, the Microautobox will receive commands from a higher layer, such as a simple rc controller or an A.I. autonomously controlling the vehicle. 
 %For this, a model of the communication interface needed to be set up in Simulink.
@@ -23,5 +23,5 @@ dSpace provided us with numerous Simulink blocksets, containing blocks of all ne
 LinMot Talk was mainly used to find out the most efficient way to communicate with the linear motor and become familiar with it's characteristic. The software includes a configurable oscilloscope, where the variables and parameters of interest can be plotted. This allowed us to determine the optimal performance of the motor in the given circumstances.
 The software is also needed to flash the configurable firmware onto the linear motor's drive. This needed to be done once, as all of the parameters and commands can be changed afterwards via CANOpen.
 
-To debug our programmed software and monitor the can bus, we used a PCAN USB adpater, together with the PCAN View software to send and receive messages and PCAN Stats to manage the CAN network and adjust the baud rate.
+To debug our programmed software and monitor the can bus, we used a PCAN USB adpater directly connected to the CAN-bus. Pcan view and Pcan stat were utilized to handle the bus setup and send messages. To monitor and record the Can-bus the software Busmaster was used.
 

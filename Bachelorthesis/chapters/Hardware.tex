@@ -38,9 +38,18 @@ The main battery consists of 16 x 3.2 V LiFeMnPO4 cells and offers 100 Ah of bat
 The kart features two "PMS 100 R" 2.8 kW double-sided synchronous motors, each controlled by one of the two ACD 4805 motor controllers. The motors also offered regenerative braking, offering longer driving time and assisting in braking the car.
 
 \subsection{LinMot}
-In order to actuate the brakes a linear motor was used. The characteristics of being fast and precised make the motor suitable for various brake maneuvers. The motor is an electromagnetic drive in tube-form. The linear motion simulating a mechanical brake can be generated electrical without any form of mechanical interconnection between motor and motion. The linear motor is composed by two parts: the stator and the runner. The runner consists of a series of neodym-magnets, placed in steel tube. In the stator, the winding as well as the bearing for the runner, position detection and supervision of the motor fit in.
+In order to actuate the brakes a linear motor was used. The characteristics of being fast and precised make the motor suitable for various brake maneuvers. The motor is an electromagnetic drive in tube-form. 
+
+The linear motion simulating a mechanical brake can be generated electrical without any form of mechanical interconnection between motor and motion. This results in a a very compact device.
+
+The linear motor is composed by two parts: the stator and the runner.
+The runner consists of a series of neodym-magnets, placed in steel tube. In the stator, the winding as well as the bearing for the runner, position detection and supervision of the motor fit in.
+
 The internal position sensors can dynamically transmit a position signal. Therefore position can be controlled real time. This guarantees a high level of safety and flexibility. 
+
 In order to communicate with the motor, an LinMot motor-drive is employed. Target position, maximum velocity and acceleration can steadily be adjusted.
+
+The operating temperature of The motor ranges from -10 °C up to 110 °C. After reaching 130 °C the motor sends an error and upon reaching 140 °C the motor goes into critical error state.
 
 
 \subsection{Power steering}
@@ -59,3 +68,5 @@ A wide variety of cables, adapters were used in order to ensure seamless integra
 Most of the cables we prepared ourselves were used for power supply.
 For the CAN communication we used a preexisting solution, where no soldering was needed.
 A metal sheet case was bought and mounted in the back of the kart, where the DC-DC converter, the MABX and the Linmot motor drive were safely stored.
+
+To account for the peak currents of the power steering and the linear motor that sit at 90A and 25A correspondingly, additional fuses were installed.
