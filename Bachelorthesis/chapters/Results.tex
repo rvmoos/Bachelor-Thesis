@@ -9,11 +9,36 @@
 
 \subsection{Linear motor}
 
-To find the optimal parameters of the linear motor, we used a simple spring setup and the LinMot Talk software. With the software, we were able to adjust any motor parameters in real-time, have it perform different moves at various speeds and accelerations. On the spring gauge, which was clamped in between the linear motor and the beam, we could read off the force and compare it to the calculated force in LinMot Talk. We found out that the maximum stroke was mostly limited by the maximum velocity. The maximum required stroke of around 55 mm can be reached with a maximum velocity of around 1.5 m/s and maximum acceleration. A maximum velocity higher than that, leads to the motor shutting down, which is something we certainly wanted to avoid.
+To find the optimal parameters of the linear motor, we used a simple spring setup and the LinMot Talk software. With the software, we were able to adjust any motor parameters in real-time, have it perform different moves at various speeds and accelerations.
+
+ On the spring gauge, which was clamped in between the linear motor and the beam, we could read off the force and compare it to the calculated force in LinMot Talk. We found out that the maximum stroke was mostly limited by the maximum velocity. The maximum required stroke of around 55 mm can be reached with a maximum velocity of around 1.5 m/s and maximum acceleration.
+ 
+  A maximum velocity higher than that leads to the motor shutting down, which is something we certainly wanted to avoid. 
+  
+  The temperature of the drive rises to critically high temperatures only after maintaining a considerably high force of above 200 N. Since such a force is only required for a very harsh brake it should be possible to prevent longer periods of braking with more than 200 N. The following Graphs show the winding-temperature change of the motor for different forces exerted on the drive.
+  % Graphiken
+  note that the drive overheats in the emergency brake simulation only after x seconds which is much longer than the average duration of an emergency brake.
+ 
+  
+  
+
+
 %include picture of setup
 
 \subsection{Brake}
-Another test was performed to check the brake's force and speed. Using simple buttons to trigger a move by the linear motor on the LinMot drive, the driver was able to brake the kart at his command. Starting of with a rather short stroke, resulted in a minimal braking force. It however proofed our concept, and showed that the linear motor can be used while on the kart. We were there independent of external power supplies as well as our laptops. As soon as we increased the stroke and therefore the brake force, one of our fuses blew. We hadn't realized, that the fuse was rated for up to 10 A. The linear motor's peak current however was around 25 A. This is why the fuse blew, and we replaced it with a appropriate fuse. Now that we were able to increase the stroke to maximum length without risking short circuit, the brake force was enough to stop the wheels at almost full speed. This showed, that our brake design fulfilled our requirements of force and speed. 
+A first proof of concept for the brake was made with the brake mounted on the kart and a driver actuating the brake maneuver with a button.
+The brake was supplied with power from the kart battery.
+
+
+For this test, the analog inputs of the Linmot motor driver were used to trigger a brake maneuver previously setup on the Linmot driver. A range of braking curves were tested, from a slight brake to an emergency brake. The speed of the kart during the brakes was around 50 km/h.
+
+In a first test without actuating the brakes at all it was noted that the kart stops considerably fast only with regenerative braking and friction acting on the kart.
+The first, shorter braking strokes resulted in almost negligible difference to the test without braking.
+However, the emergency brake resulted in locked wheels.
+
+ This proofed that a maximal braking force could be achieved and showed that the linear motor can be used while on the kart. The test was performed without external power supplies and the only input into the Linmot driver being the analog input from the braking button. During the test while trying to execute an emergency brake, one of the fuses blew. The fuses in the kart were rated up to 10 A while the linear motor's peak current however is around 25 A. The fuse was subsequently replaced with a suitable new one. 
+ 
+ It shall be noted that this test was performed with a driver in the kart at all time while the final kart will be driving without passenger and therefore be significantly lighter. This leads to a reduced requirement of force for an emergency brake because locking of the wheels will take place earlier.
 %The precision of the linear motor was not yet determined fully, which would follow in subsequent tests.
 
 \subsection{Throttle}

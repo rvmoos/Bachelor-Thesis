@@ -33,8 +33,14 @@ Especially the role of the identifier bit is important, as it handles and repres
 \section{CANOpen}
 
 CANOpen is a higher-layer protocol based on the aforementioned CAN. In the following, we will provide information on the project-relevant aspects of CANOpen.
-All real-time data is exchanged via process data objects (PDO). The adress of each individual PDO can be found in a standardized table by CAN in Automation (CiA). PDO's contain data from a single or different objects from the object dictionary. This maps each bit of the data section of a PDO to a certain object. 
-To change PDO mapping or customise parameters in the object dictionary, service data objects (SDO) are used. These however do not transmit and receive real-time data, but are only used for service purposes. They usually contain the index, subindex and the new value of the respective object.
+All real-time data is exchanged via process data objects (PDO). The adress of each individual PDO can be found in a standardized table by CAN in Automation (CiA). PDO's contain data from a single or different objects from the object dictionary. This maps each bit of the data section of a PDO to a certain object.
+
+To change PDO mapping or customise other parameters stored in the object dictionary, service data objects (SDO) are used. These however do not transmit and receive real-time data, but are only used for service purposes. They usually contain the index, subindex and the new value of the respective object.
+
+PDO as well as SDO communication is split into receive and transmit messages.
+ For PDO communication the receive PDO contains the desired command for a node and the Transmit PDO is composed of the actual state or other valuable information measured on node itself.
+
+In SDO communication a receive-SDO is either used to change a value in the object dictionary or to request the contents of an entry in the object dictionary. The receive-SDO is always answered by a corresponding transmit-PDO either acknoledging a change in the object dictionary or serving the requested data.
 
 So for example, the mapping of the ACD's RPDO1 looks like the following.
 
@@ -63,9 +69,13 @@ So in order to set a desired speed on the right (Node 6) motor controller of aro
 	\hline 
 	CAN-ID & \multicolumn{6}{c|}{DATA} \\ 
 	\hline 
-	0x206 & 09 & 00 & 48 & 03 & 00 & 00 \\ 
+	0x206 & 09 & 00 & 84 & 03 & 00 & 00 \\ 
 	\hline 
 \end{tabular} 
+
+Take note that to translate the desired target input into a bytewise message
+the little endian rule is most often utilized and the hex format is used to display the contents of each byte. According to the little endian rule the byte containing the higher bit values comes second in transmission. 
+The Command speed of the message above is split into two hex numbers yielding the underlying number 384h.
 
 Each CAN device has a personal node, ranging from 1 to 127. This ensures that every message reaches it's corresponding device.
 % example of pdo can message
@@ -169,7 +179,7 @@ Issues with CANOpen and dSpace.
 
 When we tried to control the ACD via CANOpen with the Microautobox, the communication presented itself to be an issue. The wheels were not turning smooth, but rather interrupted from time to time. It was clear that something had to be disrupting the communication.
 With the help of a CAN-USB adapter, we were able to monitor the CAN bus. After checking all physical layers, we came to the conclusion that it must be a software problem. Our first approach was to change synchronisation times. This however did not have any effect, neither did changing the baud rate or adjusting the step size for Matlab's solver.
-
+A smooth motion of the motors could be realized by sending the Receive PDO manually via the Pcan software. The problem turned out to arise from the second Receive PDO. While the first RPDO determines the target speed for the speed controller the second RPDO provides the possibility to control the motor with target torque. By default, the use of one of the mentioned does not disable the function of the other. This leads to critical failure  causing improper motion if both RPDOs are sent simultaneously. The Motor tries to achieve both, target speed and target torgue ending up rapidly switching the motor current. The problem could be solved by completely removing the second RPDO from the Matlab model. The CANopen blocks do not allow for deactivation of the individual PDO's transmission in real time.
 
 
 We established connection between MABX and a receiver, in our case a laptop connected to the MABX CAN via CAN USB.
@@ -228,8 +238,42 @@ For some reason, TPDO3 and TPDO4 would not transmit their data when a sync messa
 
 %talk about failsafe for brake
 
-Another issues presented itself while working on the brake. Previously we used a motion command called VAI go to position 16bit, which takes velocity, acceleration/deceleration and position as input and creates a curve for the linear motor, which results in the motion. However, a new command will only be executed, if the value of the motion command count has changed. In the easiest way bit 0 can be toggled. 
-To avoid this, we tried a different setting, called PV Stream. This uses a constant stream of position and velocity inputs during a fixed streaming period, interpolates and executes the command. While this seemed very intriguing, it's implementation was not possible. For some reason an error arose, stating that our streaming was too slow. Even after checking the period time with PCAN and checking all setting, the issue could not be resolved.
+Another issues presented itself while working on the brake. Previously we used a motion command called VAI go to position 16bit, which takes velocity, acceleration/deceleration and position as input and creates a curve for the linear motor, which results in the motion. However, a new command will only be executed if the last four bits of the motion command header, called command count, has changed. In the easiest way, bit 0 can be toggled. 
+To avoid this, a different setting could be utilized, called PV Stream. This uses a constant stream of position and velocity inputs during a fixed streaming period, interpolates and executes the command. While this seemed very intriguing, it's implementation was not possible. For some reason an error arose, stating that our streaming was too slow. Even after checking the period time with PCAN and checking all settings, the issue could not be resolved.
 After that, we went back to the prior way of setting the position.
+
+To counteract the need for change in the command count in order for a change in motion we introduced a pulse generator into the Matlab model.
+The pulse generators output is an alternating signal either being zero or one. With the signal from the pulse generator added to the command header, the command count changes every halve period of the pulse generator. With a sufficiently low pulse generator period a function similar to the PV stream could be implemented.
 %%really
 %clock not working as it triggers resets all the time
+
+\section{Matlab Model}
+
+In the following passage, some of the most important components of the matlab model will be explained. The matlab model is the underlying software basis for the C code running on the Microautobox handling the CAN bus and all communication on it.
+
+The physical layer of CAN has been set up in the multimessage controllersetup block. The baudrate has been set to 250 Kb/s. The module together with the board number determine the pins for the CAN connection. Moreover, Various status messages of the CAN bus can be read out from this block.
+
+The CANOpen general setup block generates a matlab block for each node on the CAN bus, sets the transmission type for each message and determines the sync interval for the network. The Sync interval has been set to 2ms and the transmission type has been defined as cyclic synchronous for all nodes. The heartbeat message and nodeguarding have been turned off in this first prototype.
+
+The blocks generated by the general setup block allow for numerous inputs and outputs. Some of the most important functionalities are the following:
+
+\begin{description}
+	\item[Sync Block]
+	The sync block generates the sync block according to the interval defined earlier. The input turns the sync message on or off.
+	\item[Reset] 
+	By feeding a rising edge into this input a node can be resetted. 
+	\item[NMT Timeout]
+	The time the nodes have to restart after a reset. If a node takes longer to restart than stated by this expression an error will occur.
+	\item[SDO Trigger]
+	To send a SDO message a rising edge must be fed into this port.  
+	\item[SDO W and RXPDO Data] 
+	The data for PDO respectively SDO transmission can be led into this input. The data is composed of vectors of data type uint8, each integer representing on byte.The data will be transmitted with the corrresponding identifier by default.
+	\item[SDO R and TXPDO data] 
+	The response to a SDO message and the cyclic transmission of the TXPDO can be read out here. The bytes of all TXPDO are encapsuled in one vector.
+	
+\end{description}
+
+The following picture shows the multimessage controllersetup block and the node blocks created by the CANOpen general setup block.
+%Bilder
+
+
